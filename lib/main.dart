@@ -1,7 +1,29 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  initService();
   runApp(MyApp());
+}
+
+FirebaseMessaging fcm = FirebaseMessaging();
+
+initService() async {
+  await fcm.requestNotificationPermissions();
+  final token = await fcm.getToken();
+  print(token);
+  fcm.configure(
+    onLaunch: (message) async {
+      print(message);
+    },
+    onMessage: (message) async {
+      print(message);
+    },
+    onResume: (message) async {
+      print(message);
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
